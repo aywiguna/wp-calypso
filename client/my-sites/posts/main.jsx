@@ -14,6 +14,7 @@ import PostTypeFilter from 'calypso/my-sites/post-type-filter';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import DocumentHead from 'calypso/components/data/document-head';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import PostTypeList from 'calypso/my-sites/post-type-list';
 import titlecase from 'to-title-case';
 import Main from 'calypso/components/main';
@@ -86,8 +87,34 @@ class PostsMain extends React.Component {
 					headerText={ translate( 'Posts' ) }
 					subHeaderText={
 						siteId
-							? translate( 'Create, edit, and manage the posts on your site.' )
-							: translate( 'Create, edit, and manage the posts on your sites.' )
+							? translate(
+									'Create, edit, and manage the posts on your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+									{
+										components: {
+											learnMoreLink: (
+												<InlineSupportLink
+													supportLink="https://wordpress.com/support/posts/"
+													supportPostId={ 84 }
+													showIcon={ false }
+												/>
+											),
+										},
+									}
+							  )
+							: translate(
+									'Create, edit, and manage the posts on your sites. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+									{
+										components: {
+											learnMoreLink: (
+												<InlineSupportLink
+													supportLink="https://wordpress.com/support/posts/"
+													supportPostId={ 84 }
+													showIcon={ false }
+												/>
+											),
+										},
+									}
+							  )
 					}
 					align="left"
 					hasScreenOptions
