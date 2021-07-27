@@ -21,6 +21,7 @@ import PageList from './page-list';
 import PageViewTracker from 'calypso/lib/analytics/page-view-tracker';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import { mapPostStatus } from 'calypso/lib/route';
 import { POST_STATUSES } from 'calypso/state/posts/constants';
 import { getPostTypeLabel } from 'calypso/state/post-types/selectors';
@@ -102,8 +103,34 @@ class PagesMain extends React.Component {
 					headerText={ translate( 'Pages' ) }
 					subHeaderText={
 						siteId
-							? translate( 'Create, edit, and manage the pages on your site.' )
-							: translate( 'Create, edit, and manage the pages on your sites.' )
+							? translate(
+									'Create, edit, and manage the pages on your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+									{
+										components: {
+											learnMoreLink: (
+												<InlineSupportLink
+													supportLink="https://wordpress.com/support/pages/"
+													supportPostId={ 86 }
+													showIcon={ false }
+												/>
+											),
+										},
+									}
+							  )
+							: translate(
+									'Create, edit, and manage the pages on your sites. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+									{
+										components: {
+											learnMoreLink: (
+												<InlineSupportLink
+													supportLink="https://wordpress.com/support/pages/"
+													supportPostId={ 86 }
+													showIcon={ false }
+												/>
+											),
+										},
+									}
+							  )
 					}
 					align="left"
 					hasScreenOptions
