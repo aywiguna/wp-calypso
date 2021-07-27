@@ -17,6 +17,7 @@ import Main from 'calypso/components/main';
 import StatsNavigation from 'calypso/blocks/stats-navigation';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import DatePicker from './stats-date-picker';
 import Countries from './stats-countries';
 import ChartTabs from './stats-chart-tabs';
@@ -197,7 +198,18 @@ class StatsSite extends Component {
 					headerText={ translate( 'Stats and Insights' ) }
 					align="left"
 					subHeaderText={ translate(
-						"Learn more about the activity and behavior of your site's visitors."
+						"Learn more about the activity and behavior of your site's visitors. {{learnMoreLink}}Learn more{{/learnMoreLink}}.",
+						{
+							components: {
+								learnMoreLink: (
+									<InlineSupportLink
+										supportLink="https://wordpress.com/support/stats/"
+										supportPostId={ 4454 }
+										showIcon={ false }
+									/>
+								),
+							},
+						}
 					) }
 				/>
 				<StatsNavigation
