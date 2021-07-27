@@ -16,6 +16,7 @@ import DocumentHead from 'calypso/components/data/document-head';
 import PageViewTracker from 'calypso/lib/analytics/page-view-tracker';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import PostTypeFilter from 'calypso/my-sites/post-type-filter';
 import PostTypeList from 'calypso/my-sites/post-type-list';
 import PostTypeUnsupported from './post-type-unsupported';
@@ -38,9 +39,35 @@ function Types( {
 } ) {
 	let subHeaderText = '';
 	if ( 'Testimonials' === get( postType, 'label', '' ) ) {
-		subHeaderText = translate( 'Create and manage all the testimonials on your site.' );
+		subHeaderText = translate(
+			'Create and manage all the testimonials on your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+			{
+				components: {
+					learnMoreLink: (
+						<InlineSupportLink
+							supportLink="https://wordpress.com/support/testimonials/"
+							supportPostId={ 97757 }
+							showIcon={ false }
+						/>
+					),
+				},
+			}
+		);
 	} else if ( 'Projects' === get( postType, 'label', '' ) ) {
-		subHeaderText = translate( 'Create, edit, and manage the portfolio projects on your site.' );
+		subHeaderText = translate(
+			'Create, edit, and manage the portfolio projects on your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+			{
+				components: {
+					learnMoreLink: (
+						<InlineSupportLink
+							supportLink="https://wordpress.com/support/portfolios/"
+							supportPostId={ 84808 }
+							showIcon={ false }
+						/>
+					),
+				},
+			}
+		);
 	}
 
 	return (
