@@ -37,6 +37,7 @@ import {
 } from 'calypso/state/analytics/actions';
 import DocumentHead from 'calypso/components/data/document-head';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import { withLocalizedMoment } from 'calypso/components/localized-moment';
 import { successNotice, errorNotice } from 'calypso/state/notices/actions';
 import getSites from 'calypso/state/selectors/get-sites';
@@ -131,7 +132,19 @@ export class List extends React.Component {
 						brandFont
 						className="domain-management__page-heading"
 						headerText={ translate( 'Site Domains' ) }
-						subHeaderText={ translate( 'Manage the domains connected to your site.' ) }
+						subHeaderText={ translate( 'Manage the domains connected to your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+							{
+								components: {
+									learnMoreLink: (
+										<InlineSupportLink
+											supportLink="https://wordpress.com/support/domains/"
+											supportPostId={ 1988 }
+											showIcon={ false }
+										/>
+									),
+								},
+							}
+						) }
 						align="left"
 					/>
 					<div className="domains__header-buttons">
