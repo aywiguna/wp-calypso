@@ -9,6 +9,7 @@ import { useTranslate } from 'i18n-calypso';
  * Internal dependencies
  */
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import HeaderCart from 'calypso/my-sites/checkout/cart/header-cart';
 
 /**
@@ -25,7 +26,18 @@ function EmailHeader( { currentRoute, selectedSite } ) {
 				brandFont
 				headerText={ translate( 'Emails' ) }
 				subHeaderText={ translate(
-					'Your home base for accessing, setting up, and managing your emails.'
+					'Your home base for accessing, setting up, and managing your emails. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+					{
+						components: {
+							learnMoreLink: (
+								<InlineSupportLink
+									supportLink="https://wordpress.com/support/add-email/"
+									supportPostId={ 34087 }
+									showIcon={ false }
+								/>
+							),
+						},
+					}
 				) }
 				align="left"
 			/>
