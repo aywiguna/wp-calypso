@@ -17,6 +17,7 @@ import MediaLibrary from 'calypso/my-sites/media-library';
 import QueryMedia from 'calypso/components/data/query-media';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import EditorMediaModalDialog from 'calypso/post-editor/media-modal/dialog';
 import { EditorMediaModalDetail } from 'calypso/post-editor/media-modal/detail';
 import { getSelectedSite, getSelectedSiteId } from 'calypso/state/ui/selectors';
@@ -375,7 +376,18 @@ class Media extends Component {
 					className="media__page-heading"
 					headerText={ translate( 'Media' ) }
 					subHeaderText={ translate(
-						'Manage all the media on your site, including images, video, and more.'
+						'Manage all the media on your site, including images, video, and more. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+						{
+							components: {
+								learnMoreLink: (
+									<InlineSupportLink
+										supportLink="https://wordpress.com/support/media/"
+										supportPostId={ 853 }
+										showIcon={ false }
+									/>
+								),
+							},
+						}
 					) }
 					align="left"
 					hasScreenOptions
