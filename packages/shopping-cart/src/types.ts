@@ -41,8 +41,13 @@ export type SubscribeCallback = () => void;
 
 export type ShoppingCartManagerSubscribe = ( callback: SubscribeCallback ) => UnsubscribeFunction;
 
+export interface SubscriptionManager {
+	subscribe: ShoppingCartManagerSubscribe;
+	notifySubscribers: () => void;
+}
+
 export interface ShoppingCartManagerWrapper {
-	getManager: () => ShoppingCartManager;
+	getCurrentManager: () => ShoppingCartManager;
 }
 
 export interface ShoppingCartManager extends ShoppingCartActionCreators {
@@ -153,4 +158,8 @@ export type ShoppingCartMiddleware = (
 	action: ShoppingCartAction,
 	state: ShoppingCartState,
 	dispatch: Dispatch< ShoppingCartAction >
+) => void;
+
+export type AddActionPromise = (
+	resolve: ( value: ResponseCart | PromiseLike< ResponseCart > ) => void
 ) => void;
