@@ -10,36 +10,49 @@ import type { Dispatch } from 'react';
 
 export * from './shopping-cart-endpoint';
 
-export interface ShoppingCartManagerArguments {
-	cartKey: string | undefined;
-	setCart: SetCart;
-	getCart: GetCart;
-	options?: ShoppingCartManagerOptions;
-}
+export type ShoppingCartReducerDispatch = ( action: ShoppingCartAction ) => void;
 
-export type GetCart = ( cartKey: string ) => Promise< ResponseCart >;
+export type ShoppingCartReducer = (
+	state: ShoppingCartState,
+	action: ShoppingCartAction
+) => ShoppingCartState;
 
-export type SetCart = ( cartKey: string, requestCart: RequestCart ) => Promise< ResponseCart >;
+export type GetCartFunction = ( cartKey: string ) => Promise< ResponseCart >;
+export type SetCartFunction = (
+	cartKey: string,
+	requestCart: RequestCart
+) => Promise< ResponseCart >;
 
 export interface ShoppingCartManagerOptions {
 	refetchOnWindowFocus?: boolean;
+	defaultCartKey?: string | undefined;
 }
 
-export interface ShoppingCartManager {
+export type GetManagerForKey = ( cartKey: string | undefined ) => ShoppingCartManager;
+
+export interface ShoppingCartManagerClient {
+	forCartKey: GetManagerForKey;
+	subscribeToCartKey: ( cartKey: string, callback: SubscribeCallback ) => UnsubscribeFunction;
+}
+
+export type UnsubscribeFunction = () => void;
+
+export type SubscribeCallback = () => void;
+
+export type ShoppingCartManagerSubscribe = ( callback: SubscribeCallback ) => UnsubscribeFunction;
+
+export interface ShoppingCartManagerWrapper {
+	getManager: () => ShoppingCartManager;
+}
+
+export interface ShoppingCartManager extends ShoppingCartActionCreators {
+	subscribe: ShoppingCartManagerSubscribe;
 	isLoading: boolean;
 	loadingError: string | null | undefined;
 	loadingErrorType: ShoppingCartError | undefined;
 	isPendingUpdate: boolean;
-	addProductsToCart: AddProductsToCart;
-	removeProductFromCart: RemoveProductFromCart;
-	applyCoupon: ApplyCouponToCart;
-	removeCoupon: RemoveCouponFromCart;
-	couponStatus: CouponStatus;
-	updateLocation: UpdateTaxLocationInCart;
-	replaceProductInCart: ReplaceProductInCart;
-	replaceProductsInCart: ReplaceProductsInCart;
-	reloadFromServer: ReloadCartFromServer;
 	responseCart: ResponseCart;
+	couponStatus: CouponStatus;
 }
 
 export type ReplaceProductInCart = (
@@ -108,6 +121,17 @@ export type ShoppingCartAction =
 	| { type: 'REQUEST_UPDATED_RESPONSE_CART' }
 	| { type: 'RECEIVE_UPDATED_RESPONSE_CART'; updatedResponseCart: ResponseCart }
 	| { type: 'RAISE_ERROR'; error: ShoppingCartError; message: string };
+
+export interface ShoppingCartActionCreators {
+	addProductsToCart: AddProductsToCart;
+	removeProductFromCart: RemoveProductFromCart;
+	applyCoupon: ApplyCouponToCart;
+	removeCoupon: RemoveCouponFromCart;
+	updateLocation: UpdateTaxLocationInCart;
+	replaceProductInCart: ReplaceProductInCart;
+	replaceProductsInCart: ReplaceProductsInCart;
+	reloadFromServer: ReloadCartFromServer;
+}
 
 export type ShoppingCartError = 'GET_SERVER_CART_ERROR' | 'SET_SERVER_CART_ERROR';
 
