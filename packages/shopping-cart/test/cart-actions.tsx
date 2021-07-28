@@ -14,8 +14,8 @@ import type {
 	RequestCart,
 	ResponseCart,
 	MinimalRequestCartProduct,
-	GetCart,
-	SetCart,
+	GetCartFunction,
+	SetCartFunction,
 	ShoppingCartManagerOptions,
 } from '../src/types';
 
@@ -211,8 +211,8 @@ function MockProvider( {
 	cartKeyOverride,
 }: {
 	children: React.ReactNode;
-	setCartOverride?: SetCart;
-	getCartOverride?: GetCart;
+	setCartOverride?: SetCartFunction;
+	getCartOverride?: GetCartFunction;
 	options?: ShoppingCartManagerOptions;
 	cartKeyOverride?: string | undefined;
 } ) {
@@ -220,8 +220,10 @@ function MockProvider( {
 		<ShoppingCartProvider
 			setCart={ setCartOverride ?? setCart }
 			getCart={ getCartOverride ?? getCart }
-			cartKey={ cartKeyOverride ?? mainCartKey }
-			options={ options }
+			options={ {
+				...( options ?? {} ),
+				defaultCartKey: cartKeyOverride ?? mainCartKey,
+			} }
 		>
 			{ children }
 		</ShoppingCartProvider>
