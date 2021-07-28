@@ -102,6 +102,7 @@ export type CacheStatus = 'fresh' | 'fresh-pending' | 'valid' | 'invalid' | 'pen
 export type CouponStatus = 'fresh' | 'pending' | 'applied' | 'rejected';
 
 export type ShoppingCartAction =
+	| { type: 'GET_CART_FROM_SERVER' }
 	| { type: 'SYNC_CART_TO_SERVER' }
 	| { type: 'CLEAR_QUEUED_ACTIONS' }
 	| { type: 'REMOVE_CART_ITEM'; uuidToRemove: string }
