@@ -49,6 +49,7 @@ import isSiteWPForTeams from 'calypso/state/selectors/is-site-wpforteams';
 import isSiteP2Hub from 'calypso/state/selectors/is-site-p2-hub';
 import isAtomicAndEditingToolkitPluginDeactivated from 'calypso/state/selectors/is-atomic-and-editing-toolkit-plugin-deactivated';
 import QueryJetpackPlugins from 'calypso/components/data/query-jetpack-plugins';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 
 export class SiteSettingsFormGeneral extends Component {
 	componentDidMount() {
@@ -575,7 +576,12 @@ export class SiteSettingsFormGeneral extends Component {
 					isSaving={ isSavingSettings }
 					onButtonClick={ handleSubmitForm }
 					showButton
-					title={ translate( 'Privacy', { context: 'Privacy Settings header' } ) }
+					title={ translate( 'Privacy {{learnMoreLink}}{{/learnMoreLink}}', {
+						components: {
+							learnMoreLink: <InlineSupportLink supportContext="privacy" showText={ false } />,
+						},
+						context: 'Privacy Settings header',
+					} ) }
 				/>
 				<Card>
 					<form> { this.visibilityOptionsComingSoon() }</form>
