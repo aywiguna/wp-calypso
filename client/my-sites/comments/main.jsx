@@ -18,6 +18,7 @@ import CommentList from './comment-list';
 import CommentTree from './comment-tree';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import { canCurrentUser } from 'calypso/state/selectors/can-current-user';
 import { preventWidows } from 'calypso/lib/formatting';
 import { isEnabled } from '@automattic/calypso-config';
@@ -81,7 +82,12 @@ export class CommentsManagement extends Component {
 						className="comments__page-heading"
 						headerText={ translate( 'Comments' ) }
 						subHeaderText={ translate(
-							'View, reply to, and manage all the comments across your site.'
+							'View, reply to, and manage all the comments across your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+							{
+								components: {
+									learnMoreLink: <InlineSupportLink supportContext="comments" showIcon={ false } />,
+								},
+							}
 						) }
 						align="left"
 						hasScreenOptions
