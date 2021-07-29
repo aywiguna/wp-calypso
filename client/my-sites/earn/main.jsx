@@ -18,6 +18,7 @@ import HeaderCake from 'calypso/components/header-cake';
 import Main from 'calypso/components/main';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import WordAdsEarnings from 'calypso/my-sites/stats/wordads/earnings';
 import AdsSettings from 'calypso/my-sites/earn/ads/form-settings';
 import {
@@ -202,7 +203,14 @@ class EarningsMain extends Component {
 					brandFont
 					className="earn__page-header"
 					headerText={ translate( 'Earn' ) }
-					subHeaderText={ translate( 'Explore tools to earn money with your site.' ) }
+					subHeaderText={ translate(
+						'Explore tools to earn money with your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+						{
+							components: {
+								learnMoreLink: <InlineSupportLink supportContext="ads" showIcon={ false } />,
+							},
+						}
+					) }
 					align="left"
 				/>
 				{ this.getHeaderCake() }
