@@ -7,6 +7,7 @@ import { localize } from 'i18n-calypso';
 /**
  * Internal dependencies
  */
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import PageViewTracker from 'calypso/lib/analytics/page-view-tracker';
 import QueryKeyringConnections from 'calypso/components/data/query-keyring-connections';
 import QueryKeyringServices from 'calypso/components/data/query-keyring-services';
@@ -19,7 +20,14 @@ const SharingConnections = ( { translate } ) => (
 		<QueryKeyringConnections />
 		<QueryKeyringServices />
 		<QueryPublicizeConnections selectedSite />
-		<SharingServicesGroup type="publicize" title={ translate( 'Publicize posts' ) } />
+		<SharingServicesGroup
+			type="publicize"
+			title={ translate( 'Publicize posts {{learnMoreLink}}{{/learnMoreLink}}', {
+				components: {
+					learnMoreLink: <InlineSupportLink supportContext="publicize" showText={ false } />,
+				},
+			} ) }
+		/>
 		<SharingServicesGroup type="other" title={ translate( 'Manage connections' ) } />
 	</div>
 );
