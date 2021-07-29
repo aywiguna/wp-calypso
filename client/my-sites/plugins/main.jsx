@@ -14,6 +14,7 @@ import Main from 'calypso/components/main';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import DocumentHead from 'calypso/components/data/document-head';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import SectionNav from 'calypso/components/section-nav';
 import NavTabs from 'calypso/components/section-nav/tabs';
 import NavItem from 'calypso/components/section-nav/item';
@@ -416,7 +417,14 @@ export class PluginsMain extends Component {
 							headerText={ this.props.translate( 'Plugins' ) }
 							align="left"
 							subHeaderText={ this.props.translate(
-								'Add new functionality and integrations to your site with plugins.'
+								'Add new functionality and integrations to your site with plugins. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+								{
+									components: {
+										learnMoreLink: (
+											<InlineSupportLink supportContext="plugins" showIcon={ false } />
+										),
+									},
+								}
 							) }
 						/>
 						<div className="plugins__main-buttons">
