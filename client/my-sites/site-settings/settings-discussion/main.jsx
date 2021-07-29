@@ -14,6 +14,7 @@ import JetpackDevModeNotice from 'calypso/my-sites/site-settings/jetpack-dev-mod
 import Main from 'calypso/components/main';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import SiteSettingsNavigation from 'calypso/my-sites/site-settings/navigation';
 import { getSelectedSite } from 'calypso/state/ui/selectors';
 import ScreenOptionsTab from 'calypso/components/screen-options-tab';
@@ -28,7 +29,14 @@ const SiteSettingsDiscussion = ( { site, translate } ) => (
 			brandFont
 			className="settings-discussion__page-heading"
 			headerText={ translate( 'Discussion Settings' ) }
-			subHeaderText={ translate( 'Control how people interact with your site through comments.' ) }
+			subHeaderText={ translate(
+				'Control how people interact with your site through comments. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+				{
+					components: {
+						learnMoreLink: <InlineSupportLink supportContext="discussion" showIcon={ false } />,
+					},
+				}
+			) }
 			align="left"
 			hasScreenOptions
 		/>
