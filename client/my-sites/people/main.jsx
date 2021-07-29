@@ -17,6 +17,7 @@ import EmptyContent from 'calypso/components/empty-content';
 import PeopleSectionNav from 'calypso/my-sites/people/people-section-nav';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import { getSelectedSiteId, getSelectedSite } from 'calypso/state/ui/selectors';
 import { isJetpackSite } from 'calypso/state/sites/selectors';
 import { canCurrentUser } from 'calypso/state/selectors/can-current-user';
@@ -55,7 +56,14 @@ class People extends React.Component {
 			case 'email-followers':
 				return translate( 'People who have subscribed to your site using their email address.' );
 			default:
-				return translate( 'Invite contributors to your site and manage their access settings.' );
+				return translate(
+					'Invite contributors to your site and manage their access settings. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+					{
+						components: {
+							learnMoreLink: <InlineSupportLink supportContext="team" showIcon={ false } />,
+						},
+					}
+				);
 		}
 	}
 
