@@ -21,6 +21,7 @@ import {
 import { canCurrentUser } from 'calypso/state/selectors/can-current-user';
 import { isJetpackSite } from 'calypso/state/sites/selectors';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import ScreenOptionsTab from 'calypso/components/screen-options-tab';
 
 /**
@@ -56,7 +57,14 @@ const SectionExport = ( { isJetpack, canUserExport, site, translate } ) => {
 					brandFont
 					className="exporter__section-header"
 					headerText={ translate( 'Export Content' ) }
-					subHeaderText={ translate( 'Back up or move your content to another site or platform.' ) }
+					subHeaderText={ translate(
+						'Back up or move your content to another site or platform. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+						{
+							components: {
+								learnMoreLink: <InlineSupportLink supportContext="export" showIcon={ false } />,
+							},
+						}
+					) }
 					align="left"
 					hasScreenOptions
 				/>
