@@ -15,6 +15,7 @@ import SectionHeader from 'calypso/components/section-header';
 import DocumentHead from 'calypso/components/data/document-head';
 import SidebarNavigation from 'calypso/my-sites/sidebar-navigation';
 import FormattedHeader from 'calypso/components/formatted-header';
+import InlineSupportLink from 'calypso/components/inline-support-link';
 import { Interval, EVERY_FIVE_SECONDS } from 'calypso/lib/interval';
 import WordPressImporter from 'calypso/my-sites/importer/importer-wordpress';
 import MediumImporter from 'calypso/my-sites/importer/importer-medium';
@@ -298,7 +299,14 @@ class SectionImport extends Component {
 					brandFont
 					className="importer__page-heading"
 					headerText={ translate( 'Import Content' ) }
-					subHeaderText={ translate( 'Import content from another website or platform.' ) }
+					subHeaderText={ translate(
+						'Import content from another website or platform. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+						{
+							components: {
+								learnMoreLink: <InlineSupportLink supportContext="import" showIcon={ false } />,
+							},
+						}
+					) }
 					align="left"
 					hasScreenOptions
 				/>
