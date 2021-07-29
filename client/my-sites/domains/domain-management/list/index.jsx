@@ -135,13 +135,7 @@ export class List extends React.Component {
 						subHeaderText={ translate( 'Manage the domains connected to your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
 							{
 								components: {
-									learnMoreLink: (
-										<InlineSupportLink
-											supportLink="https://wordpress.com/support/domains/"
-											supportPostId={ 1988 }
-											showIcon={ false }
-										/>
-									),
+									learnMoreLink: <InlineSupportLink supportContext="domains" showIcon={ false } />,
 								},
 							}
 						) }
