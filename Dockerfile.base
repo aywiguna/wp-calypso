@@ -127,6 +127,7 @@ FROM ci-desktop as ci-e2e
 
 # test/e2e/test/mocha.env.js will install a compatible chromedriver.
 ENV DETECT_CHROMEDRIVER_VERSION=true
+ENV PLAYWRIGHT_SKIP_DOWNLOAD=false
 
 RUN wget --no-verbose https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
 	&& apt-get install -y ./google-chrome-stable_current_amd64.deb \
