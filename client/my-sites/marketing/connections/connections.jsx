@@ -22,7 +22,7 @@ const SharingConnections = ( { translate } ) => (
 		<QueryPublicizeConnections selectedSite />
 		<SharingServicesGroup
 			type="publicize"
-			title={ translate( 'Publicize posts {{learnMoreLink}}{{/learnMoreLink}}', {
+			title={ translate( 'Publicize posts {{learnMoreLink/}}', {
 				components: {
 					learnMoreLink: <InlineSupportLink supportContext="publicize" showText={ false } />,
 				},
