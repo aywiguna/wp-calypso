@@ -132,7 +132,8 @@ export class List extends React.Component {
 						brandFont
 						className="domain-management__page-heading"
 						headerText={ translate( 'Site Domains' ) }
-						subHeaderText={ translate( 'Manage the domains connected to your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+						subHeaderText={ translate(
+							'Manage the domains connected to your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
 							{
 								components: {
 									learnMoreLink: <InlineSupportLink supportContext="domains" showIcon={ false } />,
