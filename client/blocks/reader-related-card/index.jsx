@@ -4,7 +4,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { get, partial } from 'lodash';
+import { get } from 'lodash';
 import { localize } from 'i18n-calypso';
 
 /**
@@ -116,8 +116,8 @@ export function RelatedPostCard( {
 		'has-thumbnail': !! post.canonical_media,
 		'has-excerpt': post.excerpt && post.excerpt.length > 1,
 	} );
-	const postClickTracker = partial( onPostClick, post );
-	const siteClickTracker = partial( onSiteClick, post );
+	const postClickTracker = () => onPostClick( post );
+	const siteClickTracker = () => onSiteClick( post );
 
 	const canonicalMedia = post.canonical_media;
 	let featuredAsset;

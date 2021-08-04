@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { isEqual, partial } from 'lodash';
+import { isEqual } from 'lodash';
 import path from 'path';
 import { localize } from 'i18n-calypso';
 import classNames from 'classnames';
@@ -293,10 +293,10 @@ export default connect(
 			isImageLoaded: isImageEditorImageLoaded( state ),
 		};
 	},
-	( dispatch, ownProp ) => {
+	( dispatch, ownProps ) => {
 		const defaultAspectRatio = getDefaultAspectRatio(
-			ownProp.defaultAspectRatio,
-			ownProp.allowedAspectRatios
+			ownProps.defaultAspectRatio,
+			ownProps.allowedAspectRatios
 		);
 
 		const resetActionsAdditionalData = {
@@ -307,8 +307,8 @@ export default connect(
 			{
 				setImageEditorFileInfo,
 				setImageEditorDefaultAspectRatio,
-				resetImageEditorState: partial( resetImageEditorState, resetActionsAdditionalData ),
-				resetAllImageEditorState: partial( resetAllImageEditorState, resetActionsAdditionalData ),
+				resetImageEditorState: () => resetImageEditorState( resetActionsAdditionalData ),
+				resetAllImageEditorState: () => resetAllImageEditorState( resetActionsAdditionalData ),
 			},
 			dispatch
 		);

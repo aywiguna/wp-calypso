@@ -4,7 +4,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { partial } from 'lodash';
 import Gridicon from 'calypso/components/gridicon';
 import { connect } from 'react-redux';
 
@@ -140,7 +139,7 @@ class PreviewToolbar extends Component {
 							<SelectDropdown.Item
 								key={ device }
 								selected={ device === currentDevice }
-								onClick={ partial( setDeviceViewport, device ) }
+								onClick={ () => setDeviceViewport( device ) }
 								icon={ <Gridicon size={ 18 } icon={ this.devices[ device ].icon } /> }
 								e2eTitle={ device }
 							>
