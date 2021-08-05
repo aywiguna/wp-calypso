@@ -40,7 +40,7 @@ export class SidebarComponent {
 	async waitForSidebarInitialization(): Promise< ElementHandle > {
 		// Wait for the sidebar to finish loading all elements, including asynchronously loaded
 		// offers and notices that may appear in the Current Site Card.
-		await this.waitUntilMenuStable( 125 );
+		await this.waitUntilMenuStable( 50 );
 
 		return await this.page.waitForSelector( selectors.sidebar );
 	}
