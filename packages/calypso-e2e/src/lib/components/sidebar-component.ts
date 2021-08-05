@@ -22,11 +22,16 @@ export class SidebarComponent {
 	private page: Page;
 
 	/**
-	 * Waits for the wrapper of the sidebar to be initialized on the page, then returns the element handle for that sidebar
+	 * Waits for the wrapper of the sidebar to be initialized on the page, then returns the element handle for that sidebar.
 	 *
 	 * @returns the ElementHandle for the sidebar
 	 */
 	async waitForSidebarInitialization(): Promise< ElementHandle > {
+		await Promise.race( [
+			this.page.waitForLoadState( 'networkidle' ),
+			this.page.waitForTimeout( 500 ),
+		] );
+
 		return await this.page.waitForSelector( selectors.sidebar );
 	}
 
