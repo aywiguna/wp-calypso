@@ -18,8 +18,7 @@ const selectors = {
 };
 
 /**
- * Component representing the sidebar on the dashboard of WPCOM.
- *
+ * Component representing the sidebar on WordPress.com calypso frontend.
  */
 export class SidebarComponent {
 	private page: Page;
@@ -34,25 +33,65 @@ export class SidebarComponent {
 	}
 
 	/**
-	 * Waits for the wrapper of the sidebar to be initialized on the page, then returns the element handle for that sidebar
+	 * Waits for the wrapper of the sidebar to be initialized on the page, then returns the element handle for that sidebar.
 	 *
-	 * @returns the ElementHandle for the sidebar
+	 * @returns {Promise<ElementHandle>} ElementHandle of the sidebar.
 	 */
 	async waitForSidebarInitialization(): Promise< ElementHandle > {
+		// Wait for the sidebar to finish loading all elements, including asynchronously loaded
+		// offers and notices that may appear in the Current Site Card.
+		await this.waitUntilMenuStable( 125 );
+
 		return await this.page.waitForSelector( selectors.sidebar );
 	}
 
 	/**
-	 * Given heading and subheading, or any combination of the two, locate and click on the items on the sidebar.
+	 * Waits for the sidebar menu items to finish loading.
+	 *
+	 * The bounding box of the Current Site card (located at top of the sidebar) is compared
+	 * to determine whether loading has completed.
+	 *
+	 * On some sites, typically atomic, the sidebar undergoes multiple mutations of its structure:
+	 * 	1. Shell of the sidebar gets created and remains static throughout the entire loading process.
+	 * 	2. First version of the sidebar gets created and has only the original basic menu items.
+	 * 	3. The mostly final version of the sidebar gets created. The parent element looks exactly the same
+	 * 		but it is a new node that is attached in the DOM to replace the old one. This final version has
+	 * 		all the menus from different plugins.
+	 *	4. Offers and notices are loaded in a banner that pop in on the top of the sidebar. This does not
+	 *		detach the parent sidebar, or any of the other elements, from the DOM. However, they do shift
+	 *		down slightly on the page.
+	 *
+	 * The bounding box of the Current Site card is one of the last elements to stabilize in the loading
+	 * process and its stability is a good indicator of the page stability.
+	 *
+	 * @param {number} interval Interval at which to check the bounding box.
+	 * @returns {Promise<void>} No return value.
+	 */
+	private async waitUntilMenuStable( interval: number ): Promise< void > {
+		let loaded = false;
+		while ( ! loaded ) {
+			const elementHandle = await this.page.waitForSelector( selectors.currentSiteCard );
+			const startingBoundingBox = await elementHandle.boundingBox();
+			await new Promise( ( resolve ) => setTimeout( resolve, interval ) );
+			const currentBoundingBox = await elementHandle.boundingBox();
+			// Height is the only factor that changes in the bounding box.
+			if ( startingBoundingBox!.height === currentBoundingBox!.height ) {
+				loaded = true;
+			}
+		}
+	}
+
+	/**
+	 * Given an item and subitem or just the heading, navigate to the specified item/subitem.
 	 *
 	 * This method supports any of the following use cases:
-	 *   - heading only
-	 *   - heading and subheading
+	 *   - item only
+	 *   - item and subitem
 	 *
-	 * Heading is defined as the top-level menu item that is permanently visible on the sidebar, unless outside
+	 * Item is defined as the top-level menu item that is permanently visible on the sidebar, unless outside
 	 * of the viewport.
 	 *
-	 * Subheading is defined as the child-level menu item that is exposed only on hover or by toggling open the listing by clicking on the parent menu item.
+	 * Subitem is defined as the child-level menu item that is exposed only on hover or by toggling open the listing by clicking on the parent menu item.
 	 *
 	 * Note, in the current Nav Unification paradigm, clicking on certain combinations of sidebar menu items will trigger
 	 * navigation away to an entirely new page (eg. wp-admin). Attempting to reuse the SidebarComponent object
@@ -77,29 +116,10 @@ export class SidebarComponent {
 			await this._openMobileSidebar();
 		}
 
-		// Wait for the sidebar to finish loading all elements, including asynchronously loaded
-		// offers and notices that may appear in the Current Site Card.
-		await this._waitUntilMenuItemsLoaded( 125 );
-
-		item = toTitleCase( item ).trim();
-		// This will exclude entries where the `heading` term matches multiple times
-		// eg. `Settings` but they are sub-headings in reality, such as Jetpack > Settings.
-		// Since the sub-headings are always hidden unless heading is selected, this works to
-		// our advantage by specifying to match only visible text.
-		await this._click( `${ selectors.heading } ${ selectors.visibleSpan( item ) }` );
-
-		await Promise.race( [
-			this.page.waitForSelector( `*css=li.selected >> ${ selectors.visibleSpan( item ) }` ),
-			this.page.waitForSelector( `*css=ul.is-toggle-open >> ${ selectors.visibleSpan( item ) }` ),
-		] );
+		await this.navigateItem( item );
 
 		if ( subitem ) {
-			subitem = toTitleCase( subitem ).trim();
-			// Explicitly select only the child headings and combine with the text matching engine.
-			await this._click( `${ selectors.subheading } ${ selectors.visibleSpan( subitem ) }` );
-			await this.page.waitForSelector(
-				`*css=${ selectors.subheading }.selected ${ selectors.visibleSpan( subitem ) }`
-			);
+			await this.navigateSubItem( subitem );
 		}
 
 		// Confirm the focus is now back to the content, not the sidebar.
@@ -107,39 +127,41 @@ export class SidebarComponent {
 	}
 
 	/**
-	 * Waits for the sidebar menu items to finish loading.
+	 * Handles navigation to the parent-level item.
 	 *
-	 * The bounding box of the Current Site card (located at top of the sidebar) is compared
-	 * to determine whether loading has completed.
-	 *
-	 * On some sites, typically atomic, the sidebar undergoes multiple mutations of its structure:
-	 * 	1. Shell of the sidebar gets created and remains static throughout the entire loading process.
-	 * 	2. First version of the sidebar gets created and has only the original basic menu items.
-	 * 	3. The mostly final version of the sidebar gets created. The parent element looks exactly the same
-	 * 		but it is a new node that is attached in the DOM to replace the old one. This final version has
-	 * 		all the menus from different plugins.
-	 *	4. Offers and notices are loaded in a banner that pop in on the top of the sidebar. This does not
-	 *		detach the parent sidebar, or any of the other elements, from the DOM. However, they do shift
-	 *		down slightly on the page.
-	 *
-	 * The bounding box of the Current Site card is one of the last elements to stabilize in the loading
-	 * process and its stability is a good indicator of the page stability.
-	 *
-	 * @param {number} delay Interval at which to check the bounding box.
-	 * @returns {Promise<void>} No return value.
+	 * @param {string} name Name of the item.
 	 */
-	private async _waitUntilMenuItemsLoaded( delay: number ): Promise< void > {
-		let loaded = false;
-		while ( ! loaded ) {
-			const elementHandle = await this.page.waitForSelector( selectors.currentSiteCard );
-			const startingBoundingBox = await elementHandle.boundingBox();
-			await new Promise( ( resolve ) => setTimeout( resolve, delay ) );
-			const currentBoundingBox = await elementHandle.boundingBox();
-			// Height is the only factor that changes in the bounding box.
-			if ( startingBoundingBox!.height === currentBoundingBox!.height ) {
-				loaded = true;
-			}
-		}
+	private async navigateItem( name: string ): Promise< void > {
+		name = toTitleCase( name ).trim();
+
+		// This selector will exclude entries where the `heading` term matches multiple times
+		// eg. `Settings` but they are sub-headings in reality, such as Jetpack > Settings.
+		// The sub-headings are always hidden unless heading is selected so by limiting the
+		// target to visible span items it will effectively eliminate scenarios such as above.
+		await this._click( `${ selectors.heading } ${ selectors.visibleSpan( name ) }` );
+
+		// Check whether the top level item containing the item text has been selected.
+		// The *css= syntax allows capture of specified element that contains the visible span with
+		// text `name`.
+		await Promise.race( [
+			this.page.waitForSelector( `*css=li.selected >> ${ selectors.visibleSpan( name ) }` ),
+			this.page.waitForSelector( `*css=ul.is-toggle-open >> ${ selectors.visibleSpan( name ) }` ),
+		] );
+	}
+
+	/**
+	 * Handles navigation to the subitems.
+	 *
+	 * @param {string} name Name of the subitem.
+	 */
+	private async navigateSubItem( name: string ): Promise< void > {
+		name = toTitleCase( name ).trim();
+		// Explicitly select only the child headings and combine with the text matching engine.
+		await this._click( `${ selectors.subheading } ${ selectors.visibleSpan( name ) }` );
+
+		await this.page.waitForSelector(
+			`*css=${ selectors.subheading }.selected ${ selectors.visibleSpan( name ) }`
+		);
 	}
 
 	/**
