@@ -27,11 +27,11 @@ export class SidebarComponent {
 	 * @returns the ElementHandle for the sidebar
 	 */
 	async waitForSidebarInitialization(): Promise< ElementHandle > {
-		await Promise.race( [
-			this.page.waitForLoadState( 'networkidle' ),
-			this.page.waitForTimeout( 500 ),
-		] );
-
+		try {
+			await this.page.waitForSelector( '.banner', { timeout: 1000 } );
+		} catch ( error ) {
+			// Suppress error.
+		}
 		return await this.page.waitForSelector( selectors.sidebar );
 	}
 
