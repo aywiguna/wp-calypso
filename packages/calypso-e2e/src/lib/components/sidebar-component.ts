@@ -10,8 +10,8 @@ const selectors = {
 	// Sidebar
 	sidebar: '.sidebar',
 	heading: '.sidebar > li',
-	subheading: '.sidebar__menu-item--child',
-	expandedMenu: '.sidebar__menu.is-toggle-open',
+	subheading: `.sidebar__menu-item--child`,
+	visibleSpan: ( name: string ) => `span:has-text("${ name }"):visible`,
 
 	// Sidebar regions
 	currentSiteCard: '.card.current-site',
@@ -47,7 +47,6 @@ export class SidebarComponent {
 	 *
 	 * This method supports any of the following use cases:
 	 *   - heading only
-	 *   - subheading only
 	 *   - heading and subheading
 	 *
 	 * Heading is defined as the top-level menu item that is permanently visible on the sidebar, unless outside
@@ -65,7 +64,6 @@ export class SidebarComponent {
 	 * @returns {Promise<void>} No return value.
 	 */
 	async gotoMenu( { item, subitem }: { item: string; subitem?: string } ): Promise< void > {
-		let selector;
 		const viewportName = getViewportName();
 
 		// Especially on mobile devices, there can be a race condition in clicking on "My Sites" button
@@ -81,23 +79,27 @@ export class SidebarComponent {
 
 		// Wait for the sidebar to finish loading all elements, including asynchronously loaded
 		// offers and notices that may appear in the Current Site Card.
-		await this._waitUntilMenuItemsLoaded( 50 );
+		await this._waitUntilMenuItemsLoaded( 125 );
 
 		item = toTitleCase( item ).trim();
 		// This will exclude entries where the `heading` term matches multiple times
 		// eg. `Settings` but they are sub-headings in reality, such as Jetpack > Settings.
 		// Since the sub-headings are always hidden unless heading is selected, this works to
 		// our advantage by specifying to match only visible text.
-		selector = `${ selectors.heading } span:has-text("${ item }"):visible`;
-		await this._click( selector );
+		await this._click( `${ selectors.heading } ${ selectors.visibleSpan( item ) }` );
+
+		await Promise.race( [
+			this.page.waitForSelector( `*css=li.selected >> ${ selectors.visibleSpan( item ) }` ),
+			this.page.waitForSelector( `*css=ul.is-toggle-open >> ${ selectors.visibleSpan( item ) }` ),
+		] );
 
 		if ( subitem ) {
 			subitem = toTitleCase( subitem ).trim();
 			// Explicitly select only the child headings and combine with the text matching engine.
-			// This works better than using CSS pseudo-classes like `:has-text` or `:text-matches` for text
-			// matching.
-			selector = `${ selectors.subheading } >> text="${ subitem }"`;
-			await this._click( selector );
+			await this._click( `${ selectors.subheading } ${ selectors.visibleSpan( subitem ) }` );
+			await this.page.waitForSelector(
+				`*css=${ selectors.subheading }.selected ${ selectors.visibleSpan( subitem ) }`
+			);
 		}
 
 		// Confirm the focus is now back to the content, not the sidebar.
@@ -108,7 +110,7 @@ export class SidebarComponent {
 	 * Waits for the sidebar menu items to finish loading.
 	 *
 	 * The bounding box of the Current Site card (located at top of the sidebar) is compared
-	 * every 250ms to determine whether loading has completed.
+	 * to determine whether loading has completed.
 	 *
 	 * On some sites, typically atomic, the sidebar undergoes multiple mutations of its structure:
 	 * 	1. Shell of the sidebar gets created and remains static throughout the entire loading process.
@@ -123,6 +125,7 @@ export class SidebarComponent {
 	 * The bounding box of the Current Site card is one of the last elements to stabilize in the loading
 	 * process and its stability is a good indicator of the page stability.
 	 *
+	 * @param {number} delay Interval at which to check the bounding box.
 	 * @returns {Promise<void>} No return value.
 	 */
 	private async _waitUntilMenuItemsLoaded( delay: number ): Promise< void > {
