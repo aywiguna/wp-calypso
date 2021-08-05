@@ -432,12 +432,16 @@ class RegisterDomainStep extends React.Component {
 			? getAvailabilityNotice( availabilityErrorDomain, availabilityError, availabilityErrorData )
 			: {};
 
+		const containerDivClassName = classNames( 'register-domain-step', {
+			'register-domain-step__signup': this.props.isSignupStep,
+		} );
+
 		const searchBoxClassName = classNames( 'register-domain-step__search', {
 			'register-domain-step__search-domain-step': this.props.isSignupStep,
 		} );
 
 		return (
-			<div className="register-domain-step">
+			<div className={ containerDivClassName }>
 				<StickyPanel className={ searchBoxClassName }>
 					<CompactCard className="register-domain-step__search-card">
 						<Search
@@ -458,9 +462,8 @@ class RegisterDomainStep extends React.Component {
 							placeholder={ this.getPlaceholderText() }
 							ref={ this.bindSearchCardReference }
 							isReskinned={ this.props.isReskinned }
-						>
-							{ this.renderSearchFilters() }
-						</Search>
+						></Search>
+						{ this.renderSearchFilters() }
 					</CompactCard>
 				</StickyPanel>
 				{ availabilityMessage && (
