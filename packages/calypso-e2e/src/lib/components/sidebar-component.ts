@@ -28,7 +28,7 @@ export class SidebarComponent {
 	 */
 	async waitForSidebarInitialization(): Promise< ElementHandle > {
 		try {
-			await this.page.waitForSelector( '.banner', { timeout: 1000 } );
+			await this.page.waitForSelector( '.current-site__notices', { timeout: 3000 } );
 		} catch ( error ) {
 			// Suppress error.
 		}
