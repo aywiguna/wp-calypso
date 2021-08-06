@@ -12,10 +12,9 @@ import Gridicon from 'calypso/components/gridicon';
 /**
  * Internal dependencies
  */
-import { Button, Card } from '@automattic/components';
+import { Button, Card, Popover } from '@automattic/components';
 import FormCheckbox from 'calypso/components/forms/form-checkbox';
 import FormLabel from 'calypso/components/forms/form-label';
-import Popover from 'calypso/components/popover';
 import { requestActivityActionTypeCounts } from 'calypso/state/data-getters';
 import { updateFilter } from 'calypso/state/activity-log/actions';
 import { recordTracksEvent, withAnalytics } from 'calypso/state/analytics/actions';

@@ -11,14 +11,13 @@ import { get, pick } from 'lodash';
 /**
  * Internal dependencies
  */
-import { Button } from '@automattic/components';
+import { Button, Popover } from '@automattic/components';
 import CommentHtmlEditor from 'calypso/my-sites/comments/comment/comment-html-editor';
 import FormButton from 'calypso/components/forms/form-button';
 import FormFieldset from 'calypso/components/forms/form-fieldset';
 import FormLabel from 'calypso/components/forms/form-label';
 import FormTextInput from 'calypso/components/forms/form-text-input';
 import InfoPopover from 'calypso/components/info-popover';
-import Popover from 'calypso/components/popover';
 import PostSchedule from 'calypso/components/post-schedule';
 import QuerySiteSettings from 'calypso/components/data/query-site-settings';
 import { withLocalizedMoment } from 'calypso/components/localized-moment';

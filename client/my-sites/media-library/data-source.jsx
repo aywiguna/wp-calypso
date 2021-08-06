@@ -14,8 +14,8 @@ import classnames from 'classnames';
  * Internal dependencies
  */
 import { Button, ScreenReaderText } from '@automattic/components';
-import PopoverMenu from 'calypso/components/popover/menu';
-import PopoverMenuItem from 'calypso/components/popover/menu-item';
+import PopoverMenu from 'calypso/components/popover-menu';
+import PopoverMenuItem from 'calypso/components/popover-menu/item';
 import GooglePhotosIcon from './google-photos-icon';
 import config from '@automattic/calypso-config';
 import { getSelectedSiteId } from 'calypso/state/ui/selectors';

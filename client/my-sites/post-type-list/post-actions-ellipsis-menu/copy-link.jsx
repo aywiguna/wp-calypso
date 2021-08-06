@@ -9,7 +9,7 @@ import { localize, translate } from 'i18n-calypso';
 /**
  * Internal dependencies
  */
-import PopoverMenuItemClipboard from 'calypso/components/popover/menu-item-clipboard';
+import PopoverMenuItemClipboard from 'calypso/components/popover-menu/item-clipboard';
 import { getPost } from 'calypso/state/posts/selectors';
 import { bumpStat, recordTracksEvent } from 'calypso/state/analytics/actions';
 import { bumpStatGenerator } from './utils';

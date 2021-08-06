@@ -17,7 +17,7 @@ import FormCheckbox from 'calypso/components/forms/form-checkbox';
 import FormRadio from 'calypso/components/forms/form-radio';
 import DomainNotice from 'calypso/my-sites/domains/domain-management/components/domain-notice';
 import EllipsisMenu from 'calypso/components/ellipsis-menu';
-import PopoverMenuItem from 'calypso/components/popover/menu-item';
+import PopoverMenuItem from 'calypso/components/popover-menu/item';
 import { hasGSuiteWithUs, getGSuiteMailboxCount } from 'calypso/lib/gsuite';
 import { withoutHttp } from 'calypso/lib/url';
 import { type as domainTypes } from 'calypso/lib/domains/constants';

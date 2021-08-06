@@ -25,8 +25,8 @@ import Gridicon from 'calypso/components/gridicon';
 import HappychatButton from 'calypso/components/happychat/button';
 import { Button } from '@automattic/components';
 import FoldableCard from 'calypso/components/foldable-card';
-import PopoverMenuItem from 'calypso/components/popover/menu-item';
-import PopoverMenuSeparator from 'calypso/components/popover/menu-separator';
+import PopoverMenuItem from 'calypso/components/popover-menu/item';
+import PopoverMenuSeparator from 'calypso/components/popover-menu/separator';
 import {
 	rewindBackup,
 	rewindBackupDismiss,

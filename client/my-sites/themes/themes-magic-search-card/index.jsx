@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { intersection, difference, includes, flowRight as compose } from 'lodash';
 import classNames from 'classnames';
 import Gridicon from 'calypso/components/gridicon';
-import { Button } from '@automattic/components';
+import { Button, Popover } from '@automattic/components';
 
 /**
  * Internal dependencies
@@ -22,7 +22,6 @@ import config from '@automattic/calypso-config';
 import { localize } from 'i18n-calypso';
 import MagicSearchWelcome from './welcome';
 import { getThemeFilters, getThemeFilterToTermTable } from 'calypso/state/themes/selectors';
-import Popover from 'calypso/components/popover';
 
 /**
  * Style dependencies

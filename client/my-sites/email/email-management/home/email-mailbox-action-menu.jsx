@@ -44,7 +44,7 @@ import googleSheetsIcon from 'calypso/assets/images/email-providers/google-works
 import googleSlidesIcon from 'calypso/assets/images/email-providers/google-workspace/services/flat/slides.svg';
 import { hasEmailForwards } from 'calypso/lib/domains/email-forwarding';
 import MaterialIcon from 'calypso/components/material-icon';
-import PopoverMenuItem from 'calypso/components/popover/menu-item';
+import PopoverMenuItem from 'calypso/components/popover-menu/item';
 import { removeEmailForward } from 'calypso/state/email-forwarding/actions';
 import titanCalendarIcon from 'calypso/assets/images/email-providers/titan/services/flat/calendar.svg';
 import titanContactsIcon from 'calypso/assets/images/email-providers/titan/services/flat/contacts.svg';

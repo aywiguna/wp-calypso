@@ -10,7 +10,7 @@ import { localize } from 'i18n-calypso';
  */
 import ActivityIcon from '../activity-log-item/activity-icon';
 import { Card } from '@automattic/components';
-import PopoverMenuItem from 'calypso/components/popover/menu-item';
+import PopoverMenuItem from 'calypso/components/popover-menu/item';
 import SplitButton from 'calypso/components/split-button';
 import { decodeEntities } from 'calypso/lib/formatting';
 

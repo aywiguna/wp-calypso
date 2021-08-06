@@ -11,7 +11,7 @@ import page from 'page';
  * Internal dependencies
  */
 import { formatNumberMetric } from 'calypso/lib/format-number-compact';
-import Popover from 'calypso/components/popover';
+import { Popover } from '@automattic/components';
 import { withLocalizedMoment } from 'calypso/components/localized-moment';
 
 class Month extends PureComponent {

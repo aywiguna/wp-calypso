@@ -12,8 +12,8 @@ import { localize } from 'i18n-calypso';
  */
 import { getSelectedSiteSlug } from 'calypso/state/ui/selectors';
 import { Button } from '@automattic/components';
-import PopoverMenu from 'calypso/components/popover/menu';
-import PopoverMenuItem from 'calypso/components/popover/menu-item';
+import PopoverMenu from 'calypso/components/popover-menu';
+import PopoverMenuItem from 'calypso/components/popover-menu/item';
 import Gridicon from 'calypso/components/gridicon';
 import { composeAnalytics, recordGoogleEvent } from 'calypso/state/analytics/actions';
 import { recordTracksEvent } from '@automattic/calypso-analytics';

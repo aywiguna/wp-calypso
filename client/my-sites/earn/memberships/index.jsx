@@ -42,7 +42,7 @@ import QueryMembershipProducts from 'calypso/components/data/query-memberships';
 import Gridicon from 'calypso/components/gridicon';
 import { userCan } from 'calypso/lib/site/utils';
 import EllipsisMenu from 'calypso/components/ellipsis-menu';
-import PopoverMenuItem from 'calypso/components/popover/menu-item';
+import PopoverMenuItem from 'calypso/components/popover-menu/item';
 import ExternalLink from 'calypso/components/external-link';
 import { withLocalizedMoment } from 'calypso/components/localized-moment';
 import { localizeUrl } from 'calypso/lib/i18n-utils';

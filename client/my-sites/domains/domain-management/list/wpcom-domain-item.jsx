@@ -11,8 +11,8 @@ import { createInterpolateElement } from '@wordpress/element';
  */
 import { Button } from '@automattic/components';
 import Badge from 'calypso/components/badge';
-import PopoverMenuItem from 'calypso/components/popover/menu-item';
-import PopoverMenu from 'calypso/components/popover/menu';
+import PopoverMenuItem from 'calypso/components/popover-menu/item';
+import PopoverMenu from 'calypso/components/popover-menu';
 import Gridicon from 'calypso/components/gridicon';
 import { domainManagementChangeSiteAddress } from 'calypso/my-sites/domains/paths';
 

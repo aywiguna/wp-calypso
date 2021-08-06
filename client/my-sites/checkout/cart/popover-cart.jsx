@@ -19,7 +19,7 @@ import CartBodyLoadingPlaceholder from './cart-body/loading-placeholder';
 import HeaderButton from 'calypso/components/header-button';
 import CartButtons from './cart-buttons';
 import Count from 'calypso/components/count';
-import Popover from 'calypso/components/popover';
+import { Popover } from '@automattic/components';
 import CartEmpty from './cart-empty';
 import { isCredits } from '@automattic/calypso-products';
 import TrackComponentView from 'calypso/lib/analytics/track-component-view';

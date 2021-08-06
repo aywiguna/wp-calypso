@@ -15,7 +15,7 @@ import page from 'page';
 import ActivityLogTaskUpdate from './update';
 import WithItemsToUpdate from './to-update';
 import { Card } from '@automattic/components';
-import PopoverMenuItem from 'calypso/components/popover/menu-item';
+import PopoverMenuItem from 'calypso/components/popover-menu/item';
 import SplitButton from 'calypso/components/split-button';
 import TrackComponentView from 'calypso/lib/analytics/track-component-view';
 import { getSite } from 'calypso/state/sites/selectors';

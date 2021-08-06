@@ -11,10 +11,9 @@ import { get } from 'lodash';
 /**
  * Internal dependencies
  */
-import { Button } from '@automattic/components';
+import { Button, Popover } from '@automattic/components';
 import Emojify from 'calypso/components/emojify';
 import ExternalLink from 'calypso/components/external-link';
-import Popover from 'calypso/components/popover';
 import { decodeEntities } from 'calypso/lib/formatting';
 import { urlToDomainAndPath } from 'calypso/lib/url';
 import { canCurrentUser } from 'calypso/state/selectors/can-current-user';

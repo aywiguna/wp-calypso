@@ -15,7 +15,7 @@ import styled from '@emotion/styled';
  * Internal dependencies
  */
 import SegmentedControl from 'calypso/components/segmented-control';
-import Popover from 'calypso/components/popover';
+import { Popover } from '@automattic/components';
 import { addQueryArgs } from 'calypso/lib/url';
 import {
 	getYearlyPlanByMonthly,
