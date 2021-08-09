@@ -16,8 +16,6 @@ import type { AppState } from 'calypso/types';
 export default createSelector(
 	( state: AppState ): string | undefined => {
 		const route = getCurrentRoute( state );
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore: `_timestamp` has no type binding (`getCurrentQueryArguments` is not properly typed yet)
 		const { _timestamp, ...queryArgs } = { ...getCurrentQueryArguments( state ) };
 		const queryString = new URLSearchParams( queryArgs ).toString();
 
