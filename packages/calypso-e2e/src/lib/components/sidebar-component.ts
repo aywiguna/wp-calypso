@@ -104,10 +104,10 @@ export class SidebarComponent {
 			if ( ! name ) {
 				return true;
 			}
-			await Promise.race( [
-				this.page.waitForSelector( `*css=li.selected >> ${ selectors.visibleSpan( name ) }` ),
-				this.page.waitForSelector( `*css=ul.is-toggle-open >> ${ selectors.visibleSpan( name ) }` ),
-			] );
+			const elementHandle = await this.page.waitForSelector(
+				':is(.sidebar li.selected, .sidebar ul.is-toggle-open)'
+			);
+			await elementHandle.waitForSelector( selectors.visibleSpan( name ) );
 		};
 		const expectedSubMenuActive = async ( name: string | undefined ) => {
 			if ( ! name ) {
