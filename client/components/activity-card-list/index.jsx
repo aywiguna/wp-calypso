@@ -125,7 +125,7 @@ class ActivityCardList extends Component {
 		const {
 			applySiteOffset,
 			moment,
-			retentionPoliciesEnabled,
+			displayRulesEnabled,
 			retentionDays,
 			filter,
 			isBreakpointActive: isMobile,
@@ -136,10 +136,10 @@ class ActivityCardList extends Component {
 			siteId,
 		} = this.props;
 
-		const retentionLimitCutoffDate = retentionPoliciesEnabled
+		const retentionLimitCutoffDate = displayRulesEnabled
 			? ( applySiteOffset ?? moment )().subtract( retentionDays, 'days' )
 			: null;
-		const logsWithRetention = retentionPoliciesEnabled
+		const logsWithRetention = displayRulesEnabled
 			? logs.filter( ( log ) =>
 					( applySiteOffset ?? moment )( log.activityDate ).isSameOrAfter(
 						retentionLimitCutoffDate,
@@ -156,7 +156,7 @@ class ActivityCardList extends Component {
 			logsWithRetention.slice( ( actualPage - 1 ) * pageSize )
 		);
 		const showRetentionLimitUpsell =
-			retentionPoliciesEnabled && logsWithRetention.length < logs.length && actualPage >= pageCount;
+			displayRulesEnabled && logsWithRetention.length < logs.length && actualPage >= pageCount;
 
 		return (
 			<div className="activity-card-list">
@@ -258,24 +258,24 @@ class ActivityCardList extends Component {
 
 	render() {
 		const {
-			retentionPoliciesEnabled,
+			displayRulesEnabled,
 			requestingRetentionPolicy,
 			retentionPolicyRequestError,
 			siteId,
 			logs,
 		} = this.props;
 
-		if ( retentionPoliciesEnabled && retentionPolicyRequestError ) {
+		if ( displayRulesEnabled && retentionPolicyRequestError ) {
 			return this.renderLoading();
 		}
 
 		return (
 			<>
-				{ retentionPoliciesEnabled && <QueryActivityLogRetentionPolicy siteId={ siteId } /> }
+				{ displayRulesEnabled && <QueryActivityLogRetentionPolicy siteId={ siteId } /> }
 				<QueryRewindCapabilities siteId={ siteId } />
 				<QueryRewindState siteId={ siteId } />
 
-				{ ( ! logs || ( retentionPoliciesEnabled && requestingRetentionPolicy ) ) &&
+				{ ( ! logs || ( displayRulesEnabled && requestingRetentionPolicy ) ) &&
 					this.renderLoading() }
 				{ logs && this.renderData() }
 			</>
@@ -295,7 +295,7 @@ const mapStateToProps = ( state ) => {
 
 	return {
 		filter,
-		retentionPoliciesEnabled: isEnabled( 'activity-log/retention-policies' ),
+		displayRulesEnabled: isEnabled( 'activity-log/display-rules' ),
 		requestingRetentionPolicy: retentionPolicyRequestStatus === 'pending',
 		retentionPolicyRequestError: retentionPolicyRequestStatus === 'failure',
 		retentionDays,
