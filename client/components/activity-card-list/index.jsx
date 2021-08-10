@@ -28,7 +28,7 @@ const getRetentionPolicyRequestStatus = ( state, siteId ) => {
 		return undefined;
 	}
 
-	return state.activityLog.retentionPolicy[ siteId ]?.requestStatus;
+	return state.activityLog.displayRules[ siteId ]?.requestStatus;
 };
 
 class ActivityCardList extends Component {
