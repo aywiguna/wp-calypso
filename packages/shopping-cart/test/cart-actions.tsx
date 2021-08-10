@@ -7,7 +7,11 @@ import {
 } from '@testing-library/react';
 import React, { useEffect, useRef } from 'react';
 import { getEmptyResponseCart } from '../src/empty-carts';
-import { useShoppingCart, ShoppingCartProvider } from '../src/index';
+import {
+	useShoppingCart,
+	ShoppingCartProvider,
+	createShoppingCartManagerClient,
+} from '../src/index';
 import type {
 	RequestCartProduct,
 	ResponseCartProduct,
@@ -216,14 +220,17 @@ function MockProvider( {
 	options?: ShoppingCartManagerOptions;
 	cartKeyOverride?: string | undefined;
 } ) {
+	const managerClient = createShoppingCartManagerClient( {
+		getCart: getCartOverride ?? getCart,
+		setCart: setCartOverride ?? setCart,
+	} );
 	return (
 		<ShoppingCartProvider
-			setCart={ setCartOverride ?? setCart }
-			getCart={ getCartOverride ?? getCart }
 			options={ {
 				...( options ?? {} ),
 				defaultCartKey: cartKeyOverride ?? mainCartKey,
 			} }
+			managerClient={ managerClient }
 		>
 			{ children }
 		</ShoppingCartProvider>
