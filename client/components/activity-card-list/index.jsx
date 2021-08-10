@@ -17,7 +17,7 @@ import Filterbar from 'calypso/my-sites/activity/filterbar';
 import { updateFilter } from 'calypso/state/activity-log/actions';
 import { getCurrentUserLocale } from 'calypso/state/current-user/selectors';
 import getActivityLogFilter from 'calypso/state/selectors/get-activity-log-filter';
-import getSiteActivityLogRetentionDays from 'calypso/state/selectors/get-site-activity-log-retention-days';
+import getActivityLogVisibleDays from 'calypso/state/selectors/get-activity-log-visible-days';
 import { getSelectedSiteId, getSelectedSiteSlug } from 'calypso/state/ui/selectors';
 import RetentionLimitUpsell from './retention-limit-upsell';
 
@@ -289,7 +289,7 @@ const mapStateToProps = ( state ) => {
 
 	const filter = getActivityLogFilter( state, siteId );
 	const userLocale = getCurrentUserLocale( state );
-	const retentionDays = getSiteActivityLogRetentionDays( state, siteId );
+	const retentionDays = getActivityLogVisibleDays( state, siteId );
 
 	const retentionPolicyRequestStatus = getRetentionPolicyRequestStatus( state, siteId );
 

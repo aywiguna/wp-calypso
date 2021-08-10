@@ -5,15 +5,11 @@ import { Button } from '@automattic/components';
 import { useTranslate } from 'i18n-calypso';
 import React from 'react';
 import { useSelector } from 'react-redux';
-
-/**
- * Internal dependencies
- */
+import ActivityCard from 'calypso/components/activity-card';
 import { preventWidows } from 'calypso/lib/formatting/prevent-widows';
 import isJetpackCloud from 'calypso/lib/jetpack/is-jetpack-cloud';
-import getSiteActivityLogRetentionDays from 'calypso/state/selectors/get-site-activity-log-retention-days';
+import getActivityLogVisibleDays from 'calypso/state/selectors/get-activity-log-visible-days';
 import { getSelectedSiteId, getSelectedSiteSlug } from 'calypso/state/ui/selectors';
-import ActivityCard from 'calypso/components/activity-card';
 import { useTrackUpsellView, useTrackUpgradeClick } from './hooks';
 
 /**
@@ -44,9 +40,7 @@ const RetentionLimitUpsell: React.FC< OwnProps > = ( { cardClassName } ) => {
 	const translate = useTranslate();
 
 	const siteId = useSelector( getSelectedSiteId ) as number;
-	const retentionDays = useSelector( ( state ) =>
-		getSiteActivityLogRetentionDays( state, siteId )
-	);
+	const retentionDays = useSelector( ( state ) => getActivityLogVisibleDays( state, siteId ) );
 	const trackUpgradeClick = useTrackUpgradeClick( siteId );
 	const siteSlug = useSelector( getSelectedSiteSlug );
 
