@@ -11,6 +11,7 @@ const selectors = {
 	sidebar: '.sidebar',
 	heading: '.sidebar > li',
 	subheading: '.sidebar__menu-item--child',
+	visibleSpan: ( name: string ) => `span:has-text("${ name }"):visible`,
 	expandedMenu: '.sidebar__menu.is-toggle-open',
 };
 
@@ -98,6 +99,28 @@ export class SidebarComponent {
 
 		// Confirm the focus is now back to the content, not the sidebar.
 		await this.page.waitForSelector( `${ selectors.layout }.focus-content` );
+
+		const expectedMenuActive = async ( name: string | undefined ) => {
+			if ( ! name ) {
+				return true;
+			}
+			await Promise.race( [
+				this.page.waitForSelector( `*css=li.selected >> ${ selectors.visibleSpan( name ) }` ),
+				this.page.waitForSelector( `*css=ul.is-toggle-open >> ${ selectors.visibleSpan( name ) }` ),
+			] );
+		};
+		const expectedSubMenuActive = async ( name: string | undefined ) => {
+			if ( ! name ) {
+				return true;
+			}
+			await this.page.waitForSelector(
+				`*css=${ selectors.subheading }.selected ${ selectors.visibleSpan( name ) }`
+			);
+		};
+
+		if ( ! expectedMenuActive( item ) && ! expectedSubMenuActive( subitem ) ) {
+			return await this.gotoMenu( { item, subitem } );
+		}
 	}
 
 	/**
