@@ -15,7 +15,7 @@ describe( DataHelper.createSuiteTitle( 'Media: Edit Media' ), function () {
 	} );
 
 	[
-		[ 'Simple', 'defaultUser' ],
+		// [ 'Simple', 'defaultUser' ],
 		[ 'Atomic', 'wooCommerceUser' ],
 	].forEach( function ( [ siteType, user ] ) {
 		describe( `Edit Image (${ siteType })`, function () {
@@ -35,9 +35,9 @@ describe( DataHelper.createSuiteTitle( 'Media: Edit Media' ), function () {
 				mediaPage = new MediaPage( page );
 			} );
 
-			// it( 'Show only images', async function () {
-			// 	await mediaPage.clickTab( 'Images' );
-			// } );
+			it( 'Show only images', async function () {
+				await mediaPage.clickTab( 'Images' );
+			} );
 
 			// it( 'Select the first image item', async function () {
 			// 	await mediaPage.selectItem( 1 );

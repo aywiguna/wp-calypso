@@ -15,7 +15,7 @@ describe( DataHelper.createSuiteTitle( 'Support: Popover' ), function () {
 	} );
 
 	describe.each( [
-		{ siteType: 'Simple', user: 'defaultUser' },
+		// { siteType: 'Simple', user: 'defaultUser' },
 		{ siteType: 'Atomic', user: 'wooCommerceUser' },
 	] )( 'Search and view a support article ($siteType)', function ( { user } ) {
 		let supportComponent;
