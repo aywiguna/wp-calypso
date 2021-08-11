@@ -126,7 +126,7 @@ class ActivityCardList extends Component {
 			applySiteOffset,
 			moment,
 			displayRulesEnabled,
-			retentionDays,
+			visibleDays,
 			filter,
 			isBreakpointActive: isMobile,
 			logs,
@@ -137,7 +137,7 @@ class ActivityCardList extends Component {
 		} = this.props;
 
 		const retentionLimitCutoffDate = displayRulesEnabled
-			? ( applySiteOffset ?? moment )().subtract( retentionDays, 'days' )
+			? ( applySiteOffset ?? moment )().subtract( visibleDays, 'days' )
 			: null;
 		const logsWithRetention = displayRulesEnabled
 			? logs.filter( ( log ) =>
@@ -289,7 +289,7 @@ const mapStateToProps = ( state ) => {
 
 	const filter = getActivityLogFilter( state, siteId );
 	const userLocale = getCurrentUserLocale( state );
-	const retentionDays = getActivityLogVisibleDays( state, siteId );
+	const visibleDays = getActivityLogVisibleDays( state, siteId );
 
 	const retentionPolicyRequestStatus = getRetentionPolicyRequestStatus( state, siteId );
 
@@ -298,7 +298,7 @@ const mapStateToProps = ( state ) => {
 		displayRulesEnabled: isEnabled( 'activity-log/display-rules' ),
 		requestingRetentionPolicy: retentionPolicyRequestStatus === 'pending',
 		retentionPolicyRequestError: retentionPolicyRequestStatus === 'failure',
-		retentionDays,
+		visibleDays,
 		siteId,
 		siteSlug,
 		userLocale,
