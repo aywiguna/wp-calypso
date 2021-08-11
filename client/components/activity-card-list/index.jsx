@@ -136,13 +136,13 @@ class ActivityCardList extends Component {
 			siteId,
 		} = this.props;
 
-		const retentionLimitCutoffDate = displayRulesEnabled
+		const visibleLimitCutoffDate = displayRulesEnabled
 			? ( applySiteOffset ?? moment )().subtract( visibleDays, 'days' )
 			: null;
 		const logsWithRetention = displayRulesEnabled
 			? logs.filter( ( log ) =>
 					( applySiteOffset ?? moment )( log.activityDate ).isSameOrAfter(
-						retentionLimitCutoffDate,
+						visibleLimitCutoffDate,
 						'day'
 					)
 			  )
