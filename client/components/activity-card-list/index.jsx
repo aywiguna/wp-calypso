@@ -23,7 +23,7 @@ import VisibleDaysLimitUpsell from './visible-days-limit-upsell';
 
 import './style.scss';
 
-const getRetentionPolicyRequestStatus = ( state, siteId ) => {
+const getDisplayRulesRequestStatus = ( state, siteId ) => {
 	if ( ! Number.isInteger( siteId ) ) {
 		return undefined;
 	}
@@ -259,13 +259,13 @@ class ActivityCardList extends Component {
 	render() {
 		const {
 			displayRulesEnabled,
-			requestingRetentionPolicy,
-			retentionPolicyRequestError,
+			requestingDisplayRules,
+			displayRulesRequestError,
 			siteId,
 			logs,
 		} = this.props;
 
-		if ( displayRulesEnabled && retentionPolicyRequestError ) {
+		if ( displayRulesEnabled && displayRulesRequestError ) {
 			return this.renderLoading();
 		}
 
@@ -275,8 +275,7 @@ class ActivityCardList extends Component {
 				<QueryRewindCapabilities siteId={ siteId } />
 				<QueryRewindState siteId={ siteId } />
 
-				{ ( ! logs || ( displayRulesEnabled && requestingRetentionPolicy ) ) &&
-					this.renderLoading() }
+				{ ( ! logs || ( displayRulesEnabled && requestingDisplayRules ) ) && this.renderLoading() }
 				{ logs && this.renderData() }
 			</>
 		);
@@ -291,13 +290,13 @@ const mapStateToProps = ( state ) => {
 	const userLocale = getCurrentUserLocale( state );
 	const visibleDays = getActivityLogVisibleDays( state, siteId );
 
-	const retentionPolicyRequestStatus = getRetentionPolicyRequestStatus( state, siteId );
+	const displayRulesRequestStatus = getDisplayRulesRequestStatus( state, siteId );
 
 	return {
 		filter,
 		displayRulesEnabled: isEnabled( 'activity-log/display-rules' ),
-		requestingRetentionPolicy: retentionPolicyRequestStatus === 'pending',
-		retentionPolicyRequestError: retentionPolicyRequestStatus === 'failure',
+		requestingDisplayRules: displayRulesRequestStatus === 'pending',
+		displayRulesRequestError: displayRulesRequestStatus === 'failure',
 		visibleDays,
 		siteId,
 		siteSlug,
