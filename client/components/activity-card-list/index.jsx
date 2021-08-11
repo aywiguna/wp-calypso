@@ -139,7 +139,7 @@ class ActivityCardList extends Component {
 		const visibleLimitCutoffDate = displayRulesEnabled
 			? ( applySiteOffset ?? moment )().subtract( visibleDays, 'days' )
 			: null;
-		const logsWithRetention = displayRulesEnabled
+		const visibleLogs = displayRulesEnabled
 			? logs.filter( ( log ) =>
 					( applySiteOffset ?? moment )( log.activityDate ).isSameOrAfter(
 						visibleLimitCutoffDate,
@@ -149,14 +149,12 @@ class ActivityCardList extends Component {
 			: logs;
 
 		const { page: requestedPage } = filter;
-		const pageCount = Math.ceil( logsWithRetention.length / pageSize );
+		const pageCount = Math.ceil( visibleLogs.length / pageSize );
 		const actualPage = Math.max( 1, Math.min( requestedPage, pageCount ) );
 
-		const pageLogs = this.splitLogsByDate(
-			logsWithRetention.slice( ( actualPage - 1 ) * pageSize )
-		);
+		const pageLogs = this.splitLogsByDate( visibleLogs.slice( ( actualPage - 1 ) * pageSize ) );
 		const showLimitUpsell =
-			displayRulesEnabled && logsWithRetention.length < logs.length && actualPage >= pageCount;
+			displayRulesEnabled && visibleLogs.length < logs.length && actualPage >= pageCount;
 
 		return (
 			<div className="activity-card-list">
@@ -180,7 +178,7 @@ class ActivityCardList extends Component {
 						pageClick={ this.changePage }
 						perPage={ pageSize }
 						prevLabel={ 'Newer' }
-						total={ logsWithRetention.length }
+						total={ visibleLogs.length }
 					/>
 				) }
 				{ this.renderLogs( pageLogs ) }
@@ -197,7 +195,7 @@ class ActivityCardList extends Component {
 						pageClick={ this.changePage }
 						perPage={ pageSize }
 						prevLabel={ 'Newer' }
-						total={ logsWithRetention.length }
+						total={ visibleLogs.length }
 					/>
 				) }
 			</div>
