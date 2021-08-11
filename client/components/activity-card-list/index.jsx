@@ -155,7 +155,7 @@ class ActivityCardList extends Component {
 		const pageLogs = this.splitLogsByDate(
 			logsWithRetention.slice( ( actualPage - 1 ) * pageSize )
 		);
-		const showRetentionLimitUpsell =
+		const showLimitUpsell =
 			displayRulesEnabled && logsWithRetention.length < logs.length && actualPage >= pageCount;
 
 		return (
@@ -184,7 +184,7 @@ class ActivityCardList extends Component {
 					/>
 				) }
 				{ this.renderLogs( pageLogs ) }
-				{ showRetentionLimitUpsell && (
+				{ showLimitUpsell && (
 					<VisibleDaysLimitUpsell cardClassName="activity-card-list__primary-card-with-more" />
 				) }
 				{ showPagination && (
