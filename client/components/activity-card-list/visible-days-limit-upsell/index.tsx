@@ -36,7 +36,7 @@ type OwnProps = {
 	cardClassName?: string;
 };
 
-const RetentionLimitUpsell: React.FC< OwnProps > = ( { cardClassName } ) => {
+const VisibleDaysLimitUpsell: React.FC< OwnProps > = ( { cardClassName } ) => {
 	const translate = useTranslate();
 
 	const siteId = useSelector( getSelectedSiteId ) as number;
@@ -51,12 +51,12 @@ const RetentionLimitUpsell: React.FC< OwnProps > = ( { cardClassName } ) => {
 	}
 
 	return (
-		<div className="retention-limit-upsell">
-			<div className="retention-limit-upsell__next-activity">
+		<div className="visible-days-limit-upsell">
+			<div className="visible-days-limit-upsell__next-activity">
 				<ActivityCard className={ cardClassName } activity={ PLACEHOLDER_ACTIVITY } />
 			</div>
-			<div className="retention-limit-upsell__call-to-action">
-				<h3 className="retention-limit-upsell__call-to-action-header">
+			<div className="visible-days-limit-upsell__call-to-action">
+				<h3 className="visible-days-limit-upsell__call-to-action-header">
 					{ preventWidows(
 						translate(
 							'Restore backups older than %(retentionDays)d day',
@@ -68,7 +68,7 @@ const RetentionLimitUpsell: React.FC< OwnProps > = ( { cardClassName } ) => {
 						)
 					) }
 				</h3>
-				<p className="retention-limit-upsell__call-to-action-copy">
+				<p className="visible-days-limit-upsell__call-to-action-copy">
 					{ preventWidows(
 						translate(
 							'Your activity log spans more than %(retentionDays)d day. Upgrade your backup storage to access activity older than %(retentionDays)d day.',
@@ -83,7 +83,7 @@ const RetentionLimitUpsell: React.FC< OwnProps > = ( { cardClassName } ) => {
 				<Button
 					primary
 					ref={ upsellRef }
-					className="retention-limit-upsell__call-to-action-button"
+					className="visible-days-limit-upsell__call-to-action-button"
 					onClick={ trackUpgradeClick }
 					href={ isJetpackCloud() ? `/pricing/${ siteSlug }` : `/plans/${ siteSlug }` }
 				>
@@ -94,4 +94,4 @@ const RetentionLimitUpsell: React.FC< OwnProps > = ( { cardClassName } ) => {
 	);
 };
 
-export default RetentionLimitUpsell;
+export default VisibleDaysLimitUpsell;

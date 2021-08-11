@@ -19,7 +19,7 @@ import { getCurrentUserLocale } from 'calypso/state/current-user/selectors';
 import getActivityLogFilter from 'calypso/state/selectors/get-activity-log-filter';
 import getActivityLogVisibleDays from 'calypso/state/selectors/get-activity-log-visible-days';
 import { getSelectedSiteId, getSelectedSiteSlug } from 'calypso/state/ui/selectors';
-import RetentionLimitUpsell from './retention-limit-upsell';
+import VisibleDaysLimitUpsell from './visible-days-limit-upsell';
 
 import './style.scss';
 
@@ -185,7 +185,7 @@ class ActivityCardList extends Component {
 				) }
 				{ this.renderLogs( pageLogs ) }
 				{ showRetentionLimitUpsell && (
-					<RetentionLimitUpsell cardClassName="activity-card-list__primary-card-with-more" />
+					<VisibleDaysLimitUpsell cardClassName="activity-card-list__primary-card-with-more" />
 				) }
 				{ showPagination && (
 					<Pagination
